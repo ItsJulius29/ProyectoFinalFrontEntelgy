@@ -1,4 +1,4 @@
-[
+export const tasks = [
     {
         "id": "1",
         "title": "Aprender Web Components",
@@ -14,13 +14,13 @@
     {
         "id": "3",
         "title": "Integrar Notion",
-        "description": "Autenticación e inicio de sesión en notion",
+        "description": "Autenticación e inicio de sesión en Notion",
         "completed": true
     },
     {
         "id": "4",
-        "title": "Integrar GOOGLE",
-        "description": "Autenticación de google en notion",
+        "title": "Integrar Google",
+        "description": "Autenticación de Google en Notion",
         "completed": false
     }
-]
+];
