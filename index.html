@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto Final de FrontEnd Entelgy</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/variables.css">
+</head>
+
+<body>
+
+    <header>
+        <header-component>
+            <h1>Gestor de Tareas</h1>
+        </header-component>
+        <button id="logout-btn">Cerrar sesion</button>
+    </header>
+
+    <main>
+        <task-form></task-form>
+        <task-filter></task-filter>
+        <task-list></task-list>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 - Gestor de Tareas de Julio Campos para la empresa Entelgy</p>
+    </footer>
+
+    <script src="components/header.js" defer></script>
+    <script type="module" src="script.js"></script>
+    <script type="module" src="firebase-config.js"></script>
+</body>
+
+</html>
