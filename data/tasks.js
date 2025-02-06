@@ -1,23 +1,25 @@
 const STORAGE_KEY = "tasks";
 
 export async function getTasks() {
-    const storedTasks = localStorage.getItem(STORAGE_KEY);
+    let tasks = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
-    if (storedTasks) {
-        return JSON.parse(storedTasks);
-    } else {
+    if (!tasks || tasks.length === 0) {
         try {
-            const response = await fetch("https://tujulius29.github.io/data/tasks.json", { cache: "reload" }); // Evita caché
+            const response = await fetch("https://tujulius29.github.io/data/tasks.json", { cache: "reload" });
             if (!response.ok) throw new Error("No se pudo cargar tasks.json");
-            const tasks = await response.json();
+            tasks = await response.json();
+
+            // Guarda los datos del JSON en localStorage solo la primera vez
             localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
-            return tasks;
         } catch (error) {
             console.error("Error cargando las tareas:", error);
             return [];
         }
     }
+
+    return tasks;
 }
+
 
 export async function saveTask(task) {
     let tasks = await getTasks();
