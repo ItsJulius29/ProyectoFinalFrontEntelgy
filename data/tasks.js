@@ -7,7 +7,7 @@ export async function getTasks() {
         return JSON.parse(storedTasks);
     } else {
         try {
-            const response = await fetch("/data/tasks.json", { cache: "reload" }); // Evita caché
+            const response = await fetch("https://tujulius29.github.io/data/tasks.json", { cache: "reload" }); // Evita caché
             if (!response.ok) throw new Error("No se pudo cargar tasks.json");
             const tasks = await response.json();
             localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
