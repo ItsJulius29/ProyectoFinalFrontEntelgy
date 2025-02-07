@@ -9,14 +9,23 @@ class TaskList extends HTMLElement {
                 ul {
                     list-style: none;
                     padding: 0;
+                    margin: 0;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                    widht:100%;
                 }
                 task-item {
                     display: block;
-                    padding: 10px;
-                    border: 1px solid #ccc;
-                    margin: 5px 0;
+                    padding: 15px;
+                    border-radius: 10px;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
                     background: white;
                     color: black;
+                    transition: transform 0.2s;
+                }
+                task-item:hover {
+                    transform: scale(1.02);
                 }
             </style>
             <ul id="task-list"></ul>

@@ -8,21 +8,50 @@ class TaskItem extends HTMLElement {
         this.shadowRoot.innerHTML = `
             <style>
                 .task {
-                    padding: 10px;
-                    margin: 5px 0;
-                    border: 1px solid #ccc;
+                    padding: 15px;
+                    margin: 10px 0;
+                    border-radius: 8px;
                     background: white;
                     color: black;
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                    transition: transform 0.2s, box-shadow 0.2s;
+                }
+                .task:hover {
+                    transform: scale(1.02);
+                    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
                 }
                 .completed {
-                    background: lightgreen;
+                    background: #d4edda;
                     text-decoration: line-through;
                 }
+                .buttons {
+                    display: flex;
+                    gap: 10px;
+                }
                 button {
-                    margin-left: 10px;
+                    padding: 8px 12px;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    font-size: 0.9rem;
+                    transition: background 0.3s;
+                }
+                .toggle-btn {
+                    background: #28a745;
+                    color: white;
+                }
+                .toggle-btn:hover {
+                    background: #218838;
+                }
+                .delete-btn {
+                    background: #dc3545;
+                    color: white;
+                }
+                .delete-btn:hover {
+                    background: #c82333;
                 }
             </style>
             <div class="task">

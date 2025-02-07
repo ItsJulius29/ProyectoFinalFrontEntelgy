@@ -11,8 +11,9 @@ class HeaderComponent extends HTMLElement {
                     background-color: var(--black-color);
                     color: var(--white-color);
                     text-align: center;
-                    padding: 15px;
-                    font-size: 1.5em;
+                    padding: 30px;
+                    font-size: 1.6rem;
+                    text-aling:center;
                 }
             </style>
             <header>

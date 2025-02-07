@@ -6,8 +6,7 @@ export async function getTasks() {
 
         if (!tasks || tasks.length === 0) {
             console.log("📌 No hay tareas en LocalStorage, cargando desde JSON...");
-            const response = await fetch("https://tujulius29.github.io/data/tareas_inexistentes.json");
-
+            const response = await fetch("https://tujulius29.github.io/data/tasks.json");
 
             if (!response.ok) throw new Error("No se pudo cargar tasks.json");
 
@@ -31,7 +30,7 @@ export async function saveTask(task) {
         document.dispatchEvent(new Event("task-updated"));
     } catch (error) {
         console.error("❌ Error guardando la tarea:", error);
-        document.dispatchEvent(new CustomEvent("error-occurred", { detail: error.message }));
+        document.dispatchEvent(new CustomEvent("error-occurred", { detail: "guardando la tarea" }));
     }
 }
 
@@ -43,7 +42,7 @@ export async function updateTask(updatedTask) {
         document.dispatchEvent(new Event("task-updated"));
     } catch (error) {
         console.error("❌ Error actualizando la tarea:", error);
-        document.dispatchEvent(new CustomEvent("error-occurred", { detail: error.message }));
+        document.dispatchEvent(new CustomEvent("error-occurred", { detail:"actualizando la tarea"}));
     }
 }
 
@@ -55,6 +54,6 @@ export async function deleteTask(taskId) {
         document.dispatchEvent(new Event("task-updated"));
     } catch (error) {
         console.error("❌ Error eliminando la tarea:", error);
-        document.dispatchEvent(new CustomEvent("error-occurred", { detail: error.message }));
+        document.dispatchEvent(new CustomEvent("error-occurred", { detail:"eliminando la tarea" }));
     }
 }

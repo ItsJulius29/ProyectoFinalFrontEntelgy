@@ -1,89 +1,104 @@
+/* Reset básico para eliminar márgenes y paddings por defecto */
+* {
+    margin: 0;
+}
 
 body {
-    font-family: Arial, sans-serif;
-    background: var(--background-color);
-    color: var(--text-color);
-    margin: 0;
-    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background: var(--background-color, #f4f4f4);
+    color: var(--text-color, #333);
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    width: 100%;
-    height: 100%;
+    overflow-x: hidden; /* Elimina el scroll horizontal */
 }
 
 header {
-    background: var(--primary-color);
+    background: var(--white-color, #2c3e50);
     text-align: center;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-content: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    height: 150px;
 }
 
 header button {
-    background: var(--black-color);
+    background: var(--black-color, #34495e);
     border: none;
-    padding: 10px;
-    color: var(--white-color);
+    margin: 50px;
+    color: var(--white-color, white);
     cursor: pointer;
     border-radius: 5px;
     font-size: 1rem;
-    width: 20%;
+    transition: background 0.3s ease;
     height: 50px;
-    margin: 20px;
+    width: 200px;
+}
+
+header button:hover {
+    background: #1a252f;
 }
 
 main {
     flex: 1;
-    display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
+    padding: 40px 20px;
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto;
 }
 
 footer {
-    background: var(--secondary-color);
+    background: var(--secondary-color, #2c3e50);
     color: white;
     text-align: center;
-    padding: 10px;
+    padding: 15px;
     width: 100%;
+    margin-top: auto;
 }
 
+/* Estilo del formulario de login */
 .login-container {
-    width: 500px;
-    height: 300px;
-    margin-top: 15%;
-    margin-left: 35%;
-    padding: 40px;
-    background-color: var(--primary-color);
-    color: var(--white-color);
+    width: 400px;
+    padding: 30px;
+    background-color: var(--primary-color, #2c3e50);
+    color: var(--white-color, white);
     border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
     text-align: center;
-    justify-content: center;
-}
-
-.login-container h2 {
-    margin-bottom: 20px;
+    margin: auto;
+    margin-top: 10%;
 }
 
 .login-container input {
     width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
+    padding: 12px;
+    margin: 12px 0;
+    border: none;
     border-radius: 5px;
+    box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .login-container button {
-    width: 60%;
-    margin: 10%;
-    padding: 10px;
-    background: var(--white-color);
-    color: #3498db;
+    width: 100%;
+    padding: 12px;
+    background: #3498db;
+    color: white;
     border: none;
     cursor: pointer;
     border-radius: 5px;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+}
+
+.login-container button:hover {
+    background: #2980b9;
+}
+
+.login-container h2 {
+    margin-bottom: 20px;
 }
 
 #error-message {
