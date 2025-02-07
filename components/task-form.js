@@ -16,6 +16,7 @@ class TaskForm extends HTMLElement {
                     border-radius: 10px;
                     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
                     margin: auto;
+                    max-width: 500px;
                     padding-left:10%;
                     padding-right:10%;
                 }
@@ -70,12 +71,12 @@ class TaskForm extends HTMLElement {
 
     async addTask(event) {
         event.preventDefault();
-    
+
         const title = this.shadowRoot.querySelector("#task-title").value;
         const description = this.shadowRoot.querySelector("#task-desc").value;
-    
+
         if (title.trim() === "") return;
-    
+
         const newTask = {
             id: Date.now().toString(),
             title,
