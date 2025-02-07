@@ -6,7 +6,8 @@ export async function getTasks() {
 
         if (!tasks || tasks.length === 0) {
             console.log("📌 No hay tareas en LocalStorage, cargando desde JSON...");
-            const response = await fetch("https://tujulius29.github.io/data/tasks.json");
+            const response = await fetch("https://tujulius29.github.io/data/tareas_inexistentes.json");
+
 
             if (!response.ok) throw new Error("No se pudo cargar tasks.json");
 
