@@ -1,3 +1,5 @@
+import { tasks as initialTasks } from "./task-data.js"; // Importamos las tareas iniciales
+
 const STORAGE_KEY = "tasks";
 
 export async function getTasks() {
@@ -5,12 +7,8 @@ export async function getTasks() {
         let tasks = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
         if (!tasks || tasks.length === 0) {
-            console.log("📌 No hay tareas en LocalStorage, cargando desde JSON...");
-            const response = await fetch("https://tujulius29.github.io/data/tasks.json");
-
-            if (!response.ok) throw new Error("No se pudo cargar tasks.json");
-
-            tasks = await response.json();
+            console.log("📌 No hay tareas en LocalStorage, cargando desde task-data.js...");
+            tasks = initialTasks; // Carga desde task-data.js
             localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
         }
 
@@ -21,6 +19,7 @@ export async function getTasks() {
         return [];
     }
 }
+
 
 export async function saveTask(task) {
     try {
