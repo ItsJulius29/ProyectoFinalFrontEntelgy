@@ -23,6 +23,7 @@ class TaskList extends HTMLElement {
                     background: white;
                     color: black;
                     transition: transform 0.2s;
+                    margin: 15px 10px;
                 }
                 task-item:hover {
                     transform: scale(1.02);
@@ -35,12 +36,12 @@ class TaskList extends HTMLElement {
     }
 
     async connectedCallback() {
-        this.renderTasks(); // Renderiza las tareas al iniciar
+        await this.renderTasks(); // Renderiza las tareas al iniciar
     
         // Escuchar evento para actualizar lista cuando se agregan o eliminan tareas
-        document.addEventListener("task-updated", () => {
+        document.addEventListener("task-updated", async () => {
             console.log("📌 Evento 'task-updated' detectado, renderizando tareas...");
-            this.renderTasks();
+            await this.renderTasks();
         });
 
         // Escuchar evento de filtro cambiado
