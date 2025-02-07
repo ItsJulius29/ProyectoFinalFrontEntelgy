@@ -1,4 +1,4 @@
-import { getTasks } from "../data/tasks.js";
+import { getTasks, deleteTask, updateTask } from "../data/tasks.js";
 
 class TaskList extends HTMLElement {
     constructor() {
@@ -21,25 +21,47 @@ class TaskList extends HTMLElement {
             </style>
             <ul id="task-list"></ul>
         `;
+
+        this.currentFilter = "all"; // Filtro por defecto: todas las tareas
     }
 
     async connectedCallback() {
-        await this.renderTasks(); // 🔄 Renderiza las tareas al iniciar
-
-        document.addEventListener("task-updated", async () => {
+        this.renderTasks(); // Renderiza las tareas al iniciar
+    
+        // Escuchar evento para actualizar lista cuando se agregan o eliminan tareas
+        document.addEventListener("task-updated", () => {
             console.log("📌 Evento 'task-updated' detectado, renderizando tareas...");
-            await this.renderTasks();
+            this.renderTasks();
+        });
+
+        // Escuchar evento de filtro cambiado
+        document.addEventListener("filter-changed", (e) => {
+            this.currentFilter = e.detail.filter;
+            console.log(`📌 Filtro cambiado a: ${this.currentFilter}`);
+            this.renderTasks();
         });
     }
 
     async renderTasks() {
         const tasks = await getTasks();
-        console.log("📌 Tareas obtenidas para renderizar:", tasks);
+        console.log("📌 Tareas obtenidas para render:", tasks);
+
+        if (!Array.isArray(tasks)) {
+            console.error("❌ Error: `tasks` no es un array:", tasks);
+            return;
+        }
 
         const taskList = this.shadowRoot.querySelector("#task-list");
-        taskList.innerHTML = ""; // Limpiamos antes de agregar
+        taskList.innerHTML = ""; // Limpiar lista antes de renderizar
 
-        tasks.forEach(task => {
+        // Aplicar filtro antes de renderizar
+        const filteredTasks = tasks.filter(task => {
+            if (this.currentFilter === "completed") return task.completed;
+            if (this.currentFilter === "pending") return !task.completed;
+            return true; // Mostrar todas si es "all"
+        });
+
+        filteredTasks.forEach(task => {
             const taskItem = document.createElement("task-item");
             taskItem.setAttribute("data-id", task.id);
             taskItem.setAttribute("data-title", task.title);
@@ -48,7 +70,7 @@ class TaskList extends HTMLElement {
             taskList.appendChild(taskItem);
         });
 
-        console.log("📌 Tareas renderizadas en el DOM correctamente");
+        console.log("📌 Tareas renderizadas con filtro:", this.currentFilter);
     }
 }
 
