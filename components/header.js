@@ -15,7 +15,21 @@ class HeaderComponent extends HTMLElement {
                     font-size: 1.6rem;
                     text-aling:center;
                 }
+                @media screen and (max-width: 768px) {
+                    :host {
+                        padding: 20px;
+                        font-size: 1.2rem;
+                    }
+                }
+
+                @media screen and (max-width: 480px) {
+                    :host {
+                        padding: 30px;
+                        font-size: 0.8rem;
+                    }
+                }
             </style>
+            
             <header>
                 <slot></slot>
             </header>

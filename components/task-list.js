@@ -1,4 +1,4 @@
-import { getTasks, deleteTask, updateTask } from "../data/tasks.js";
+import { getTasks } from "../data/tasks.js";
 
 class TaskList extends HTMLElement {
     constructor() {
@@ -13,7 +13,7 @@ class TaskList extends HTMLElement {
                     display: flex;
                     flex-direction: column;
                     gap: 10px;
-                    widht:100%;
+                    width: 100%;
                 }
                 task-item {
                     display: block;
@@ -23,7 +23,6 @@ class TaskList extends HTMLElement {
                     background: white;
                     color: black;
                     transition: transform 0.2s;
-                    margin: 15px 10px;
                 }
                 task-item:hover {
                     transform: scale(1.02);
@@ -32,24 +31,29 @@ class TaskList extends HTMLElement {
             <ul id="task-list"></ul>
         `;
 
-        this.currentFilter = "all"; // Filtro por defecto: todas las tareas
+        this.currentFilter = "all"; // Filtro por defecto
+        this.taskUpdatedHandler = this.renderTasks.bind(this);
+        this.filterChangedHandler = this.updateFilter.bind(this);
     }
 
-    async connectedCallback() {
-        await this.renderTasks(); // Renderiza las tareas al iniciar
-    
-        // Escuchar evento para actualizar lista cuando se agregan o eliminan tareas
-        document.addEventListener("task-updated", async () => {
-            console.log("📌 Evento 'task-updated' detectado, renderizando tareas...");
-            await this.renderTasks();
-        });
+    connectedCallback() {
+        this.renderTasks(); // Renderiza al iniciar
 
-        // Escuchar evento de filtro cambiado
-        document.addEventListener("filter-changed", (e) => {
-            this.currentFilter = e.detail.filter;
-            console.log(`📌 Filtro cambiado a: ${this.currentFilter}`);
-            this.renderTasks();
-        });
+        // Escuchar eventos de actualización de tareas
+        document.addEventListener("task-updated", this.taskUpdatedHandler);
+        document.addEventListener("filter-changed", this.filterChangedHandler);
+    }
+
+    disconnectedCallback() {
+        // Remover eventos cuando el componente se elimina del DOM
+        document.removeEventListener("task-updated", this.taskUpdatedHandler);
+        document.removeEventListener("filter-changed", this.filterChangedHandler);
+    }
+
+    async updateFilter(e) {
+        this.currentFilter = e.detail.filter;
+        console.log(`📌 Filtro cambiado a: ${this.currentFilter}`);
+        await this.renderTasks();
     }
 
     async renderTasks() {
