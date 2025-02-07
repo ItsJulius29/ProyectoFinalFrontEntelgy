@@ -14,8 +14,13 @@ class ErrorMessage extends HTMLElement {
                     margin: 10px 0;
                     font-weight: bold;
                     border-radius: 5px;
-                    max-width: 400px;
+                    max-width: 500px;
                     text-align: center;
+                    animation: fadeIn 0.3s ease-in-out;
+                }
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
                 }
             </style>
             <div class="error-container" id="error-message">⚠️ Error desconocido</div>
@@ -28,13 +33,13 @@ class ErrorMessage extends HTMLElement {
         const errorBox = this.shadowRoot.querySelector("#error-message");
 
         let errorMessage = "⚠️ Error desconocido.";
-        if (errorDetail.includes("tasks.json")) {
-            errorMessage = "❌ No se pudo cargar la lista de tareas.";
-        } else if (errorDetail.includes("guardando")) {
-            errorMessage = "⚠️ No se pudo guardar la nueva tarea.";
-        } else if (errorDetail.includes("actualizando")) {
-            errorMessage = "⚠️ Hubo un problema al actualizar la tarea.";
-        } else if (errorDetail.includes("eliminando")) {
+        if (errorDetail.includes("tareas")) {
+            errorMessage = "❌ No se pudieron cargar las tareas.";
+        } else if (errorDetail.includes("guardar")) {
+            errorMessage = "⚠️ Hubo un problema al guardar la tarea.";
+        } else if (errorDetail.includes("actualizar")) {
+            errorMessage = "⚠️ No se pudo actualizar la tarea.";
+        } else if (errorDetail.includes("eliminar")) {
             errorMessage = "⚠️ No se pudo eliminar la tarea.";
         }
 

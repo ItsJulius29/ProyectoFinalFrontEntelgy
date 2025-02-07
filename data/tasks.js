@@ -1,4 +1,4 @@
-import { tasks as initialTasks } from "./task-data.js"; // Importamos las tareas iniciales
+import { tasks as initialTasks } from "./task-data.js";
 
 const STORAGE_KEY = "tasks";
 
@@ -6,20 +6,19 @@ export async function getTasks() {
     try {
         let tasks = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
-        if (!tasks || tasks.length === 0) {
-            console.log("📌 No hay tareas en LocalStorage, cargando desde task-data.js...");
-            tasks = initialTasks; // Carga desde task-data.js
+        if (!Array.isArray(tasks) || tasks.length === 0) {
+            console.warn("⚠️ No hay tareas en LocalStorage, cargando desde task-data.js...");
+            tasks = [...initialTasks];
             localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
         }
 
         return tasks;
     } catch (error) {
-        console.error("❌ Error obteniendo las tareas:", error);
-        document.dispatchEvent(new CustomEvent("error-occurred", { detail: error.message }));
+        console.error("❌ Error al obtener las tareas:", error);
+        document.dispatchEvent(new CustomEvent("error-occurred", { detail: "Error obteniendo las tareas" }));
         return [];
     }
 }
-
 
 export async function saveTask(task) {
     try {
@@ -28,31 +27,36 @@ export async function saveTask(task) {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
         document.dispatchEvent(new Event("task-updated"));
     } catch (error) {
-        console.error("❌ Error guardando la tarea:", error);
-        document.dispatchEvent(new CustomEvent("error-occurred", { detail: "guardando la tarea" }));
+        console.error("❌ Error al guardar la tarea:", error);
+        document.dispatchEvent(new CustomEvent("error-occurred", { detail: "Error guardando la tarea" }));
     }
 }
 
 export async function updateTask(updatedTask) {
     try {
         let tasks = await getTasks();
-        tasks = tasks.map(task => (task.id === updatedTask.id ? updatedTask : task));
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
-        document.dispatchEvent(new Event("task-updated"));
+        const index = tasks.findIndex(task => task.id === updatedTask.id);
+        if (index !== -1) {
+            tasks[index] = updatedTask;
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+            document.dispatchEvent(new Event("task-updated"));
+        }
     } catch (error) {
-        console.error("❌ Error actualizando la tarea:", error);
-        document.dispatchEvent(new CustomEvent("error-occurred", { detail:"actualizando la tarea"}));
+        console.error("❌ Error al actualizar la tarea:", error);
+        document.dispatchEvent(new CustomEvent("error-occurred", { detail: "Error actualizando la tarea" }));
     }
 }
 
 export async function deleteTask(taskId) {
     try {
         let tasks = await getTasks();
-        tasks = tasks.filter(task => task.id !== taskId);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
-        document.dispatchEvent(new Event("task-updated"));
+        const newTasks = tasks.filter(task => task.id !== taskId);
+        if (tasks.length !== newTasks.length) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(newTasks));
+            document.dispatchEvent(new Event("task-updated"));
+        }
     } catch (error) {
-        console.error("❌ Error eliminando la tarea:", error);
-        document.dispatchEvent(new CustomEvent("error-occurred", { detail:"eliminando la tarea" }));
+        console.error("❌ Error al eliminar la tarea:", error);
+        document.dispatchEvent(new CustomEvent("error-occurred", { detail: "Error eliminando la tarea" }));
     }
 }
