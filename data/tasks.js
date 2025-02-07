@@ -1,5 +1,3 @@
-import { task } from "./task-data.js"; // Importa las tareas desde el archivo JS
-
 const STORAGE_KEY = "tasks";
 
 export async function getTasks() {

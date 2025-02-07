@@ -85,29 +85,22 @@ class TaskItem extends HTMLElement {
         }
     }
 
-    async deleteTask() {
-        try {
-            await deleteTask(this.getAttribute("data-id"));
-            document.dispatchEvent(new Event("task-updated"));
-        } catch (error) {
-            console.error("Error eliminando la tarea:", error);
-        }
+    deleteTask() {
+        deleteTask(this.getAttribute("data-id")); // Elimina del LocalStorage
+        document.dispatchEvent(new Event("task-updated")); // 🔄 Notifica a la UI que se actualizó
     }
+    
 
-    async toggleComplete() {
-        try {
-            const updatedTask = {
-                id: this.getAttribute("data-id"),
-                title: this.getAttribute("data-title"),
-                description: this.getAttribute("data-description"),
-                completed: this.getAttribute("data-completed") === "false"
-            };
-
-            await updateTask(updatedTask);
-            document.dispatchEvent(new Event("task-updated"));
-        } catch (error) {
-            console.error("Error actualizando la tarea:", error);
-        }
+    toggleComplete() {
+        const updatedTask = {
+            id: this.getAttribute("data-id"),
+            title: this.getAttribute("data-title"),
+            description: this.getAttribute("data-description"),
+            completed: this.getAttribute("data-completed") === "false"
+        };
+    
+        updateTask(updatedTask);
+        document.dispatchEvent(new Event("task-updated")); // 🔄 Notifica cambios en la UI
     }
     
 }
