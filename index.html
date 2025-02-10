@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
+    <meta http-equiv="Permissions-Policy" content="interest-cohort=()"> <!-- Desactiva el FLOC de Google para proteger la privacidad del usuario -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proyecto Final de FrontEnd Entelgy</title>
     <link rel="stylesheet" href="css/styles.css">
@@ -13,7 +13,7 @@
 <body>
 
     <header>
-        <header-component>
+        <header-component> <!-- Web Component que maneja el titulo dentro del header -->
             <h1>Gestor de Tareas-Julio Campos</h1>
         </header-component>
         <button id="logout-btn">Cerrar sesion</button>
@@ -21,11 +21,11 @@
 
     <main>
 
-        <error-message></error-message>
-        <task-form></task-form>
+        <error-message></error-message><!-- Muestra errores en la UI si ocurren problemas(autenticacion, fallos al cargar tareas) -->
+        <task-form></task-form><!-- Formulario para agregar tareas -->
         <br><br>
-        <task-filter></task-filter>
-        <task-list></task-list>
+        <task-filter></task-filter><!-- Componente para filtrar la lista de tareas -->
+        <task-list></task-list><!-- Lista de tareas dinámicas -->
         
     </main>
 
@@ -33,9 +33,8 @@
         <p>&copy; 2025 - Gestor de Tareas de Julio Campos para la empresa Entelgy</p>
     </footer>
 
-    <script src="components/header.js" defer></script>
+    <script src="components/header.js" defer></script> <!-- Carga del Web Component del header con defer, para asegurar que se cargue luego del HTML. -->
     <script type="module" src="script.js"></script>
-    <script type="module" src="firebase-config.js"></script>
 </body>
 
 </html>

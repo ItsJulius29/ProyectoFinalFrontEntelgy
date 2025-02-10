@@ -1,8 +1,10 @@
-class HeaderComponent extends HTMLElement {
+class HeaderComponent extends HTMLElement { //Defini un Web Component para encapsular el diseño y comportamiento del header
     constructor() {
         super();
         this.attachShadow({ mode: "open" });
 
+        //Definición de HTML Y CSS del componente
+        //slot -> permite insertar contenido dinámico dentro del header
         this.shadowRoot.innerHTML = `
             <style>
                 :host {
@@ -36,4 +38,4 @@ class HeaderComponent extends HTMLElement {
         `;
     }
 }
-customElements.define("header-component", HeaderComponent);
+customElements.define("header-component", HeaderComponent); //Registra el Web Component como header-component para poder usarlo en index.html

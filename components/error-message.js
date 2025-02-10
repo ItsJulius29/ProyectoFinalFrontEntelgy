@@ -1,8 +1,10 @@
-class ErrorMessage extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: "open" });
 
+class ErrorMessage extends HTMLElement { //Defini un Web Component para mostrar mensajes de error en la UI
+    constructor() {
+        super(); //Llama al constructor de HTMLElement
+        this.attachShadow({ mode: "open" }); //Activa el Shadow DOM
+
+        //Estructura HTML Y CSS del componente
         this.shadowRoot.innerHTML = `
             <style>
                 .error-container {
@@ -26,11 +28,11 @@ class ErrorMessage extends HTMLElement {
             <div class="error-container" id="error-message">⚠️ Error desconocido</div>
         `;
 
-        document.addEventListener("error-occurred", (e) => this.showError(e.detail));
+        document.addEventListener("error-occurred", (e) => this.showError(e.detail)); //Escucha eventos personalizados de error en toda la aplicacion
     }
 
     showError(errorDetail) {
-        const errorBox = this.shadowRoot.querySelector("#error-message");
+        const errorBox = this.shadowRoot.querySelector("#error-message"); //Obtiene el div donde se mostrará el error
 
         let errorMessage = "⚠️ Error desconocido.";
         if (errorDetail.includes("tareas")) {
@@ -52,4 +54,4 @@ class ErrorMessage extends HTMLElement {
     }
 }
 
-customElements.define("error-message", ErrorMessage);
+customElements.define("error-message", ErrorMessage); //Registra el Web Component con el nombre "error message" para poder usarlo en index.html

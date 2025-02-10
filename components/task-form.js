@@ -1,11 +1,12 @@
-import { saveTask } from "../data/tasks.js";
+import { saveTask } from "../data/tasks.js"; //Importa desde tasks.js permitiendo guardar tareas en el localStorage
 
-class TaskForm extends HTMLElement {
+class TaskForm extends HTMLElement { //Crea un Web component para poder usarse como etiqueta HTML
     constructor() {
         super();
-        this.attachShadow({ mode: "open" });
-        this.shadowRoot.innerHTML = `
+        this.attachShadow({ mode: "open" });//Activa el Shadow DOM
 
+        //Estructura HTML Y CSS del formulario
+        this.shadowRoot.innerHTML = `
             <style>
                 form {
                     display: flex;
@@ -66,28 +67,32 @@ class TaskForm extends HTMLElement {
             </form>
         `;
 
+        //Escucha el evento submit en el formulario
+        // cuando el usuario envia formulario ejecuta this.addTask(),
+        // .bind(this) asegura que this se refiera al Web Component.
         this.shadowRoot.querySelector("#task-form").addEventListener("submit", this.addTask.bind(this));
     }
 
     async addTask(event) {
-        event.preventDefault();
+        event.preventDefault(); //Evita que la página recargue al enviar el formulario
 
+        //Obtiene el valor del titulo y la descripcion ingresados
         const title = this.shadowRoot.querySelector("#task-title").value;
         const description = this.shadowRoot.querySelector("#task-desc").value;
 
-        if (title.trim() === "") return;
+        if (title.trim() === "") return; //Si no hay titulo no hace nada
 
         const newTask = {
-            id: Date.now().toString(),
+            id: Date.now().toString(), //Crea un id unico generado 
             title,
             description,
             completed: false
         };
 
-        await saveTask(newTask); // Guardamos la tarea
-        document.dispatchEvent(new Event("task-updated")); // 🔄 Actualiza la lista
-        this.shadowRoot.querySelector("#task-form").reset();
+        await saveTask(newTask); // Guardamos la tarea en localStorage
+        document.dispatchEvent(new Event("task-updated")); // Actualiza la lista de tareas
+        this.shadowRoot.querySelector("#task-form").reset(); //Limpia el formulario despues de agregar la tarea
     }
 }
 
-customElements.define("task-form", TaskForm);
+customElements.define("task-form", TaskForm); //Registra el Web Component task-form para poder usarlo en cualquier parte del HTML

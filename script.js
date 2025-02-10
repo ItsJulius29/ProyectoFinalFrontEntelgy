@@ -1,15 +1,16 @@
+/* Importación de los Web Components */
 import "./components/task-form.js";
 import "./components/task-list.js";
 import "./components/task-item.js";
 import "./components/task-filter.js";
 import "./components/error-message.js";
 
-import { auth } from "./firebase-config.js";
-import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+import { auth } from "./firebase-config.js"; //Importa configuración de Firebase
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js"; //Detecta cambios, permite cierra sesión
 
 document.addEventListener("DOMContentLoaded", () => {
-    verificarAutenticacion();
-    document.getElementById("logout-btn").addEventListener("click", cerrarSesion);
+    verificarAutenticacion(); //Llama a la función que revisa si el usuario esta autenticado
+    document.getElementById("logout-btn").addEventListener("click", cerrarSesion); //Asigna el evento al boton "Cerrar Sesion"
 });
 
 function verificarAutenticacion() {

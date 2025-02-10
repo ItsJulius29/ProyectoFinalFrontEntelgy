@@ -1,9 +1,11 @@
-import { getTasks } from "../data/tasks.js";
+import { getTasks } from "../data/tasks.js"; //Importa getTasks() para obtener las tareas almacenadas en localStorage
 
-class TaskList extends HTMLElement {
+class TaskList extends HTMLElement { //Crea un Web component para poder usarse como etiqueta HTML
     constructor() {
         super();
-        this.attachShadow({ mode: "open" });
+        this.attachShadow({ mode: "open" }); //Activa el Shadow DOM
+
+        //Estructura HTML Y CSS del componente
         this.shadowRoot.innerHTML = `
             <style>
                 ul {
@@ -31,36 +33,36 @@ class TaskList extends HTMLElement {
             <ul id="task-list"></ul>
         `;
 
-        this.currentFilter = "all"; // Filtro por defecto
+        this.currentFilter = "all"; // Filtro por defecto mostrando todas las tareas
         this.taskUpdatedHandler = this.renderTasks.bind(this);
         this.filterChangedHandler = this.updateFilter.bind(this);
     }
 
     connectedCallback() {
-        this.renderTasks(); // Renderiza al iniciar
+        this.renderTasks(); // Renderiza al iniciar mostrando las tareas iniciales
 
         // Escuchar eventos de actualización de tareas
-        document.addEventListener("task-updated", this.taskUpdatedHandler);
-        document.addEventListener("filter-changed", this.filterChangedHandler);
+        document.addEventListener("task-updated", this.taskUpdatedHandler); //Se activa cuando se agrega, edita o elimina una tarea
+        document.addEventListener("filter-changed", this.filterChangedHandler); //Se activa cuando el usuario cambia el filtro en task-filter
     }
 
-    disconnectedCallback() {
+    disconnectedCallback() { 
         // Remover eventos cuando el componente se elimina del DOM
         document.removeEventListener("task-updated", this.taskUpdatedHandler);
         document.removeEventListener("filter-changed", this.filterChangedHandler);
     }
 
-    async updateFilter(e) {
+    async updateFilter(e) { //Permite que la lista se actualice dinamicamente cuando el usuario cambia el filtro
         this.currentFilter = e.detail.filter;
         console.log(`📌 Filtro cambiado a: ${this.currentFilter}`);
         await this.renderTasks();
     }
 
     async renderTasks() {
-        const tasks = await getTasks();
+        const tasks = await getTasks(); //Obtiene la lista de tareas
         console.log("📌 Tareas obtenidas para render:", tasks);
 
-        if (!Array.isArray(tasks)) {
+        if (!Array.isArray(tasks)) { //Si no es un array, muestra error y detiene la ejecucion
             console.error("❌ Error: `tasks` no es un array:", tasks);
             return;
         }
@@ -75,7 +77,7 @@ class TaskList extends HTMLElement {
             return true; // Mostrar todas si es "all"
         });
 
-        filteredTasks.forEach(task => {
+        filteredTasks.forEach(task => { //Asegura que solo se muestren las tareas que coinciden con el filtro seleccionado
             const taskItem = document.createElement("task-item");
             taskItem.setAttribute("data-id", task.id);
             taskItem.setAttribute("data-title", task.title);
@@ -88,4 +90,4 @@ class TaskList extends HTMLElement {
     }
 }
 
-customElements.define("task-list", TaskList);
+customElements.define("task-list", TaskList); //Se registra como un Web Component para poder usarlo en index.html

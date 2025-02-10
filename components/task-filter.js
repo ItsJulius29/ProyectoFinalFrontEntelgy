@@ -1,8 +1,9 @@
-class TaskFilter extends HTMLElement {
+class TaskFilter extends HTMLElement { //Defini un Web Component para filtrar tareas segun su estado
     constructor() {
         super();
         this.attachShadow({ mode: "open" });
 
+        //Definición de HTML Y CSS del componente
         this.shadowRoot.innerHTML = `
             <style>
                 .filter-container {
@@ -51,13 +52,14 @@ class TaskFilter extends HTMLElement {
         `;
 
         // Evento para detectar cambios en el filtro
+        //Captura el evento changue en el select, cada vez que el usuario cambia el filtro, llama a applyFilter()
         this.shadowRoot.querySelector("#filter").addEventListener("change", this.applyFilter.bind(this));
     }
 
     applyFilter() {
-        const filterValue = this.shadowRoot.querySelector("#filter").value;
-        document.dispatchEvent(new CustomEvent("filter-changed", { detail: { filter: filterValue } }));
+        const filterValue = this.shadowRoot.querySelector("#filter").value; //Obtiene el valor del filtro seleccionado
+        document.dispatchEvent(new CustomEvent("filter-changed", { detail: { filter: filterValue } })); //Crea un evento personalizado, envia el valor seleccionado, escucha el evento y filtran tareas
     }
 }
 
-customElements.define("task-filter", TaskFilter);
+customElements.define("task-filter", TaskFilter); //Registra el Web Component como task-filter para poder usarlo en cualquier parte del HTML

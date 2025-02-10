@@ -1,10 +1,11 @@
-import { deleteTask, updateTask } from "../data/tasks.js";
+import { deleteTask, updateTask } from "../data/tasks.js"; //Importa las funciones que permiten modificar los datos de las tareas en localStorage
 
-class TaskItem extends HTMLElement {
+class TaskItem extends HTMLElement { //Crea un Web component para poder usarse como etiqueta HTML
     constructor() {
         super();
-        this.attachShadow({ mode: "open" });
+        this.attachShadow({ mode: "open" }); //Activa el Shadow DOM
 
+        //Estructura HTML Y CSS del componente
         this.shadowRoot.innerHTML = `
             <style>
                 .task {
@@ -111,7 +112,7 @@ class TaskItem extends HTMLElement {
         `;
     }
 
-    connectedCallback() {
+    connectedCallback() { //Se ejecuta cuando el componente se agrega al DOM
         this.render();
         this.shadowRoot.querySelector(".delete-btn").addEventListener("click", this.deleteTask.bind(this));
         this.shadowRoot.querySelector(".toggle-btn").addEventListener("click", this.toggleComplete.bind(this));
@@ -119,7 +120,7 @@ class TaskItem extends HTMLElement {
         this.shadowRoot.querySelector(".save-edit-btn").addEventListener("click", this.saveEdit.bind(this));
     }
 
-    render() {
+    render() { //Obtiene los atributos de data y actualiza el contenido dinamicamente
         const title = this.getAttribute("data-title");
         const description = this.getAttribute("data-description");
         const completed = this.getAttribute("data-completed") === "true";
@@ -135,7 +136,7 @@ class TaskItem extends HTMLElement {
         }
     }
 
-    toggleEditForm() {
+    toggleEditForm() { //Muestra u oculta el formulario de edicion
         const taskElement = this.shadowRoot.querySelector(".task");
         const form = this.shadowRoot.querySelector(".edit-form");
         
@@ -154,11 +155,14 @@ class TaskItem extends HTMLElement {
     }
 
     async saveEdit() {
+
+        //Obtiene los valores del formulario
         const newTitle = this.shadowRoot.querySelector("#edit-title").value;
         const newDescription = this.shadowRoot.querySelector("#edit-description").value;
 
         if (!newTitle.trim()) return; // Evitar guardar si el título está vacío
 
+        //Crea un objeto con los datos actualizados
         const updatedTask = {
             id: this.getAttribute("data-id"),
             title: newTitle,
@@ -166,6 +170,7 @@ class TaskItem extends HTMLElement {
             completed: this.getAttribute("data-completed") === "true"
         };
 
+        //Llama para guardar los datos 
         await updateTask(updatedTask);
 
         // Actualizar atributos del componente
@@ -181,12 +186,14 @@ class TaskItem extends HTMLElement {
         document.dispatchEvent(new Event("task-updated")); // Notificar que la tarea se actualizó
     }
 
-    deleteTask() {
+    deleteTask() { 
         deleteTask(this.getAttribute("data-id")); // Elimina del LocalStorage
-        document.dispatchEvent(new Event("task-updated")); // 🔄 Notifica a la UI que se actualizó
+        document.dispatchEvent(new Event("task-updated")); // Notifica a la UI que se actualizó
     }
 
     toggleComplete() {
+
+        //Obtiene los atributos de la tarea e invierte el estado completed
         const updatedTask = {
             id: this.getAttribute("data-id"),
             title: this.getAttribute("data-title"),
@@ -194,9 +201,10 @@ class TaskItem extends HTMLElement {
             completed: this.getAttribute("data-completed") === "false"
         };
 
+        //Guarda la tarea actualizada en localStorage
         updateTask(updatedTask);
-        document.dispatchEvent(new Event("task-updated")); // 🔄 Notifica cambios en la UI
+        document.dispatchEvent(new Event("task-updated")); // Notifica cambios en la UI
     }
 }
 
-customElements.define("task-item", TaskItem);
+customElements.define("task-item", TaskItem); //Registro del Web Component task-item para usar en cualquier parte del HTML

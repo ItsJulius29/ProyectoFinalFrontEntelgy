@@ -1,3 +1,4 @@
+/* Exporta variables tasks para que otros archivos puedan usarla */
 export const tasks = [
     {
         "id": "1",

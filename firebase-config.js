@@ -1,6 +1,6 @@
 // Importar Firebase desde el CDN proporcionado por Firebase
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js"; //Inicializa Firebase
+import { getAuth } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js"; //Manejo de autenticacion de datos
 
 // Configuración de Firebase basada en la captura de pantalla
 const firebaseConfig = {
@@ -14,7 +14,7 @@ const firebaseConfig = {
 
 // Inicializar Firebase
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
+export const auth = getAuth(app); //Obtiene servicio de autenticacion y exporta la instancia para usarla en otros archivos
 
-// Prueba si Firebase está bien conectado
+// Prueba si Firebase está bien conectado en la consola
 console.log("Firebase cargado correctamente:", app);
